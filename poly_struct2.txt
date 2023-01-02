@@ -1,0 +1,74 @@
+#include <stdio.h>
+struct poly{
+    int expon;
+    float coeff;
+};
+struct poly poly1[30], poly2[30], polyresult[50];
+
+
+
+void createpoly(struct poly poly[], int degree){
+    int i;
+    for(i=0;i<=degree;i++){
+        poly[i].expon=i;
+        printf("Coeff of x^%d: ", poly[i].expon);
+        scanf("%f", &poly[i].coeff);
+    }
+}
+
+void display(struct poly poly[], int degree){
+    int i;
+    printf("%.1f", poly[0].coeff);
+    for(i=1;i<=degree;i++){
+        printf(" + %.1fx^%d",poly[i].coeff, poly[i].expon);
+    }
+}
+
+int main(){
+int i, m=0, k, degree1, degree2, maxdegree;
+printf("Enter the degree of first polynomial: ");
+scanf("%d", &degree1);
+createpoly(poly1, degree1);
+
+printf("Enter the degree of second polynomial: ");
+scanf("%d", &degree2);
+createpoly(poly2, degree2);
+
+printf("printing first polynomial: ");
+display(poly1, degree1);
+printf("\n");
+printf("printing second polynomial: ");
+display(poly2, degree2);
+printf("\n");
+
+
+if(degree1>=degree2){
+    maxdegree=degree1;
+    for(i=0;i<=degree2;i++){
+        polyresult[m].coeff=poly1[i].coeff+poly2[i].coeff;
+        polyresult[m].expon=poly1[i].expon;
+        m++;
+    }
+    for(i=degree2+1;i<=degree1;i++){
+        polyresult[m].coeff=poly1[i].coeff;
+        polyresult[m].expon=poly1[i].expon;
+        m++;
+    }
+}
+else{
+    maxdegree=degree2;
+    for(i=0;i<degree1;i++){
+        polyresult[m].coeff=poly1[i].coeff+poly2[i].coeff;
+        polyresult[m].expon=poly2[i].expon;
+        m++;
+    }
+    for(i=degree1+1;i<=degree2;i++){
+        polyresult[m].coeff=poly2[i].coeff;
+        polyresult[m].expon=poly2[i].expon;
+        m++;
+    }
+}
+
+printf("Printing the final reult: ");
+display(polyresult, maxdegree);
+}
