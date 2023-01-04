@@ -1,0 +1,78 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+int queue[20] = {0};
+int front = -1;
+int rear = -1;
+
+bool empty(){
+    if(front == (-1) || front>rear){
+        return true;
+    }
+    else{
+        return false;
+    }
+} 
+
+void enqueue(int item){
+        queue[++rear] = item;
+
+        if(empty(true)){
+            front=rear=0;
+        }
+}
+
+
+void dequeue(){
+    if(empty(true)){
+        printf("nothing to delete");
+    }
+    else{
+    int temp = queue[front];
+    printf("%d item is deleted", temp);
+    front++;
+    }
+}
+
+void display(){
+    int itr;
+    if(empty(true)){
+     printf("underflow");   
+    }
+    else{
+        for(itr=front; itr<=rear; itr++)
+        printf("%d ",queue[itr]);
+    }
+}
+
+int main() {
+  int choice, data;
+  
+  while(true){
+  printf("\nEnter the operation: \n1)Enqueue 2)Dequeue 3)Display 4)Exit\n");
+  scanf("%d", &choice);
+  switch (choice) {
+      case 1:
+      printf("Enter the number to be inserted: ");
+      scanf("%d", &data);
+      enqueue(data);
+      break;
+      
+      case 2:
+      dequeue();
+      break;
+      
+      case 3 :
+      display();
+      break;
+      
+      case 4:
+      return 0;
+      
+      default:
+      printf("type a valid response");
+      
+   }
+  }
+}

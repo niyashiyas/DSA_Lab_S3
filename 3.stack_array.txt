@@ -1,0 +1,63 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdbool.h>
+int stack[20] = {0};
+int top=-1;
+
+void push(int item){
+        stack[++top] = item;
+}
+
+
+void pop(){
+    int temp = stack[top--];
+    printf("%d item is popped", temp);
+}
+
+void isEmpty(){
+    if(top==-1){
+        printf("stack underflow");
+    }
+}
+
+void display(){
+    int itr;
+    if(top == -1){
+     printf("underflow");   
+    }
+    else{
+        for(itr=top; itr>=0; itr--)
+        printf("%d ",stack[itr]);
+    }
+}
+
+int main() {
+  int choice, data;
+  
+  while(true){
+  printf("\nEnter the operation: \n1)Push 2)Pop 3)Display 4)Exit\n");
+  scanf("%d", &choice);
+  switch (choice) {
+      case 1:
+      printf("Enter the number to be inserted: ");
+      scanf("%d", &data);
+      push(data);
+      break;
+      
+      case 2:
+      pop();
+      break;
+      
+      case 3 :
+      display();
+      break;
+      
+      case 4:
+      return 0;
+      
+      default:
+      printf("type a valid response");
+      
+   }
+  }
+}
