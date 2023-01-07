@@ -1,16 +1,16 @@
- #include<stdio.h>
+#include<stdio.h>
 
 #include<stdlib.h>
-#define MAX 7
- 
+#define MAX 20
+
 int deque_arr[MAX];
 int front=-1;
 int rear=-1;
  
-void insert_frontEnd(int item);
-void insert_rearEnd(int item);
-int delete_frontEnd();
-int delete_rearEnd();
+void insertFront(int item);
+void insertRear(int item);
+int deleteFront();
+int deleteRear();
 void display();
 int isEmpty();
 int isFull();
@@ -26,26 +26,26 @@ int main()
                 printf("4.Delete from rear end\n");
                 printf("5.Display\n");
                 printf("6.Quit\n");
-                printf("\nEnter your choice : ");
+                printf("\nEnter the operation: ");
                 scanf("%d",&choice);
  
                 switch(choice)
                 {
                 case 1:
-                        printf("\nInput the element for adding in queue : ");
+                        printf("\nEnter the element: ");
                         scanf("%d",&item);
-                        insert_frontEnd(item);
+                        insertFront(item);
                         break;
                 case 2:
-                        printf("\nInput the element for adding in queue : ");
+                        printf("\nEnter the element : ");
                         scanf("%d",&item);
-                        insert_rearEnd(item);
+                        insertRear(item);
                         break;
                  case 3:
-                        printf("\nElement deleted from front end is : %d\n",delete_frontEnd());
+                        printf("\nElement deleted from front end is : %d\n",deleteFront());
                         break;
                  case 4:
-                        printf("\nElement deleted from rear end is : %d\n",delete_rearEnd());
+                        printf("\nElement deleted from rear end is : %d\n",deleteRear());
                         break;
                  case 5:
                         display();
@@ -54,20 +54,19 @@ int main()
                         exit(1);
                  default:
                         printf("\nWrong choice\n");
-                }/*End of switch*/
-                printf("\nfront = %d, rear =%d\n", front , rear);
+                }
                 display();
-        }/*End of while*/
-}/*End of main()*/
+        }
+}
  
-void insert_frontEnd(int item)
+void insertFront(int item)
 {
         if( isFull() )
         {
                 printf("\nQueue Overflow\n");
                 return;
         }
-        if( front==-1 )/*If queue is initially empty*/
+        if( front==-1 )
         {
                 front=0;
                 rear=0;
@@ -77,28 +76,28 @@ void insert_frontEnd(int item)
         else
                 front=front-1;
         deque_arr[front]=item ;
-}/*End of insert_frontEnd()*/
+}
  
-void insert_rearEnd(int item)
+void insertRear(int item)
 {
         if( isFull() )
         {
                 printf("\nQueue Overflow\n");
                 return;
         }
-        if(front==-1)  /*if queue is initially empty*/
+        if(front==-1)
         {
                 front=0;
                 rear=0;
         }
-        else if(rear==MAX-1)  /*rear is at last position of queue */
+        else if(rear==MAX-1)
                 rear=0;
         else
                 rear=rear+1;
         deque_arr[rear]=item ;
-}/*End of insert_rearEnd()*/
+}
  
-int delete_frontEnd()
+int deleteFront()
 {
         int item;
         if( isEmpty() )
@@ -107,7 +106,7 @@ int delete_frontEnd()
                 exit(1);
         }
         item=deque_arr[front];
-        if(front==rear) /*Queue has only one element */
+        if(front==rear) 
         {
                 front=-1;
                 rear=-1;
@@ -118,9 +117,9 @@ int delete_frontEnd()
                 else
                         front=front+1;
         return item;
-}/*End of delete_frontEnd()*/
+}
  
-int delete_rearEnd()
+int deleteRear()
 {
         int item;
         if( isEmpty() )
@@ -130,7 +129,7 @@ int delete_rearEnd()
         }
         item=deque_arr[rear];
  
-        if(front==rear) /*queue has only one element*/
+        if(front==rear) 
         {
                 front=-1;
                 rear=-1;
@@ -140,7 +139,7 @@ int delete_rearEnd()
         else
                 rear=rear-1;
         return item;
-}/*End of delete_rearEnd() */
+}
  
 int isFull()
 {
@@ -148,7 +147,7 @@ int isFull()
                 return 1;
         else
                 return 0;
-}/*End of isFull()*/
+}
  
 int isEmpty()
 {
@@ -156,7 +155,7 @@ int isEmpty()
                 return 1;
         else
                 return 0;
-}/*End of isEmpty()*/
+}
  
 void display()
 {
@@ -182,4 +181,4 @@ void display()
                         printf("%d ",deque_arr[i++]);
         }
         printf("\n");
-}/*End of display() */
+}
