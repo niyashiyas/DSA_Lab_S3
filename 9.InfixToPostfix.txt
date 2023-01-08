@@ -1,0 +1,123 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+#define n 50
+
+char stack[n]; 
+int top = -1;
+
+void infixToPostfix();
+void push(char c);
+char pop();
+int isOperator(char c);
+int precedence(char c);
+
+int main() {
+    char Infix[n], Postfix[n];
+    printf("Enter your infix expression: ");
+    scanf("%s", &Infix[n]);
+    infixToPostfix(Infix, Postfix);
+    printf("The postfix expresssion is %s", Postfix);
+}
+
+int isOperator(char c) {
+    if(c =='+' || c == '-' || c == '*' || c == '/' || c == '^') {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+int precedence(char c) {
+  if(c == '^') {
+      return 3;
+  }  
+  else if(c == '*' || c == '/') {
+      return 2;
+  }
+  else if(c =='+' || c == '-') {
+      return 1;
+  }
+  else {
+      return 0;
+  }
+}
+
+void push(char c) {
+    if(top >= n-1) {
+        printf("Stack Overflow");
+    }
+    else {
+        stack[top++] = c;
+    }
+}
+
+char pop() {
+ if(top == -1) {
+     printf("Empty stack");
+     exit(1);
+ }
+ else {
+     return stack[top--];
+ }
+}
+
+void infixToPostfix(char Infix[],char Postfix[]) {
+    int i=0,j=0;
+    char x, item = Infix[i];
+    push('(');
+    strcat(Infix, ")");
+    
+    
+    while(item != '\0') {
+        
+		if(item == '(') {
+			push(item);
+		}
+		else if( isdigit(item) || isalpha(item)) {
+			Postfix[j++] = item;
+		}
+		else if(isOperator(item) == 1) {
+			x=pop();
+			while(isOperator(x) == 1 && precedence(x)>= precedence(item)) {
+				Postfix[j++] = x;
+				x = pop();
+			}
+			push(x);
+			push(item);   
+		    
+		}
+		else if(item == ')') {
+			x = pop();
+			while(x != '(') {
+				Postfix[j++] = x;
+				x = pop();
+			}
+		}
+		else {
+			printf("\nInvalid infix Expression.\n");
+			getchar();
+			exit(1);
+		}
+		i++;
+
+
+		item = Infix[i];
+	}
+	
+	if(top>0) {
+		printf("\nInvalid infix Expression.\n");
+		exit(1);
+	}
+	
+	if(top>0) {
+		printf("\nInvalid infix Expression.\n");
+		getchar();
+		exit(1);
+	}
+ 
+	Postfix[j] = '\0';   
+}
