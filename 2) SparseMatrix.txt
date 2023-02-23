@@ -1,0 +1,151 @@
+#include<stdio.h>
+void transpose(int b[100][3]){
+ int t[100][3],k=1,i,j;
+ for(i=0;i<=b[0][1];i++){
+  for(j=1;j<=b[0][2];j++){
+   if(b[j][1]==i){
+    t[k][0]=b[j][1];
+    t[k][1]=b[j][0];
+    t[k][2]=b[j][2];
+    k++;
+   }
+  }
+ }
+ t[0][0]=b[0][0];
+ t[0][1]=b[0][1];
+ t[0][2]=b[0][2];
+ for(i=0;i<=t[0][2];i++){
+  for(j=0;j<3;j++){
+    printf("%d ",t[i][j]); 
+  }
+    printf("\n");
+ } 
+} 
+ 
+int sparseRep(int a[100][100],int b[100][3],int m,int n){
+ int k,i,j;
+ b[0][0]=m;
+ b[0][1]=n;
+ k=1;
+ for(i=0;i<m;i++) {
+  for(j=0;j<n;j++) {
+   if(a[i][j]!=0) {
+    b[k][0]=i;
+    b[k][1]=j;
+    b[k][2]=a[i][j];
+    k++;
+   }
+  }
+ }
+ b[0][2]=k-1;
+ printf("Triplet representation\n");
+ for(i=0;i<k;i++){
+  for(j=0;j<3;j++){
+   printf("%d ",b[i][j]);}
+   printf("\n");}
+}
+
+void enterMatrix(int a[100][100],int m,int n){
+ int i,j;
+ printf("Enter the elements ");
+ for(i=0;i<m;i++){
+  for(j=0;j<n;j++){
+   scanf("%d",&a[i][j]);
+  }
+ }
+ printf(“Normal matrix representaion\n”);
+ for(i=0;i<m;i++){
+  for(j=0;j<n;j++){
+   printf("%d ",a[i][j]);
+  }
+  printf("\n");
+ }
+}
+
+void sparseSum(int b1[100][3],int b2[100][3]){
+ int c[100][3],i=1,j=1,k=1;
+ c[0][0]=b1[0][0];
+ c[0][1]=b1[0][1];
+ while(i<=b1[0][2] && j<=b2[0][2]){
+  if(b1[i][0]==b2[j][0]){
+   if(b1[i][1]==b2[j][1]){
+    c[k][2]=b1[i][2]+b2[j][2];
+    c[k][0]=b1[i][0];
+    c[k][1]=b1[i][1];
+ k++;
+ i++;
+ j++;
+ }
+ else{
+ if(b1[i][1]<b2[j][1]){
+ c[k][0]=b1[i][0];
+ c[k][1]=b1[i][1];
+ c[k][2]=b1[i][2];
+ i++;
+ k++;
+ }
+ else{
+ c[k][0]=b2[j][0];
+ c[k][1]=b2[j][1];
+ c[k][2]=b2[j][2];
+ k++;
+ j++;
+ }
+ }
+ }
+ else{
+ if(b1[i][0]>b2[j][0]){
+ c[k][0]=b2[j][0];
+ c[k][1]=b2[j][1];
+ c[k][2]=b2[j][2];
+ k++;
+ j++;
+ }
+ else{
+ c[k][0]=b1[i][0];
+ c[k][1]=b1[i][1];
+ c[k][2]=b1[i][2];
+ k++;
+ i++;
+ }
+ }
+ }
+while(i<=b1[0][2]){
+ c[k][0]=b1[i][0];
+ c[k][1]=b1[i][1];
+ c[k][2]=b1[i][2];
+ k++;
+ i++;
+ }
+ while(j<=b2[0][2]){
+ c[k][0]=b2[j][0];
+ c[k][1]=b2[j][1];
+ c[k][2]=b2[j][2];
+ k++;
+ j++;
+ }
+for(i=0;i<k;i++){
+ for(j=0;j<3;j++){
+ printf("%d ",c[i][j]);
+ }
+ printf("\n");
+}
+} 
+ 
+void main(){
+ int a1[100][100],a2[100][100],m,n,p,q,b1[100][3],b2[100][3],k1,k2;
+ printf("Enter the order of first matrix ");
+ scanf("%d %d",&m,&n);
+ enterMatrix(a1,m,n);
+ sparseRep(a1,b1,m,n);
+ printf("Transpose\n");
+ transpose(b1);
+ printf("Enter the order of second matrix ");
+ scanf("%d %d",&p,&q);
+ enterMatrix(a2,p,q);
+ sparseRep(a2,b2,p,q);
+ printf("Transpose\n");
+ transpose(b2);
+ printf("Sum is\n");
+ sparseSum(b1,b2);
+}
