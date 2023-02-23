@@ -1,13 +1,13 @@
-// Online C compiler to run C program online
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-int queue[20] = {0};
+int n=5;
+int cqueue[5] = {0};
 int front = -1;
 int rear = -1;
 
 bool empty(){
-    if(front == (-1) || front>rear){
+    if(front == (-1)){
         return true;
     }
     else{
@@ -16,40 +16,61 @@ bool empty(){
 } 
 
 void enqueue(int item){
-        queue[++rear] = item;
-
-        if(empty(true)){
+    if(empty(true)){
             front=rear=0;
+            cqueue[front] = item;
+    }   
+    else{
+        if((rear+1)%n != front){
+            rear = (rear+1) % n;
+            cqueue[rear] = item;
         }
+        else{
+            printf("No space");
+        }   
+    }
+
 }
 
 
 void dequeue(){
-    if(empty(true)){
+    if(empty(true))
+    {
         printf("nothing to delete");
     }
     else{
-    int temp = queue[front];
-    printf("%d item is deleted", temp);
-    front++;
+        if(front!=rear){
+            int temp = cqueue[front];
+            printf("%d item is deleted", temp);
+            front=(front+1)%n;
+        }
+        else{
+            int temp = cqueue[front];
+            printf("%d item is deleted", temp);
+            front=rear=-1;
+        }
     }
 }
 
 void display(){
     int itr;
     if(empty(true)){
-     printf("underflow");   
+     printf("empty");  
+     
     }
     else{
-        for(itr=front; itr<=rear; itr++)
-        printf("%d ",queue[itr]);
+        for(itr=front; itr!=rear; itr=(itr+1)%n){
+        printf("%d ", cqueue[itr]);
+        }
+        printf("%d ", cqueue[itr]);
     }
+
 }
 
-int main() {
+void main() {
   int choice, data;
   
-  while(true){
+  while(1){
   printf("\nEnter the operation: \n1)Enqueue 2)Dequeue 3)Display 4)Exit\n");
   scanf("%d", &choice);
   switch (choice) {
@@ -68,7 +89,7 @@ int main() {
       break;
       
       case 4:
-      return 0;
+      exit(0);
       
       default:
       printf("type a valid response");

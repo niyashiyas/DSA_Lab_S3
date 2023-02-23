@@ -5,8 +5,6 @@ struct poly{
 };
 struct poly poly1[30], poly2[30], polyresult[50];
 
-
-
 void createpoly(struct poly poly[], int degree){
     int i;
     for(i=0;i<=degree;i++){
